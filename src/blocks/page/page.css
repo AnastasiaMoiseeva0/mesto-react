@@ -1,5 +1,4 @@
 .page {
-    background: #000;
     font-family: 'Inter', Arial, sans-serif;
     min-width: 320px;
 }
@@ -9,4 +8,8 @@
         max-width: 880px;
         margin: 0 auto;
     }
+}
+
+body {
+    background: #000;
 }

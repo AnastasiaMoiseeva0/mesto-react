@@ -1,28 +1,29 @@
-export class Api {
-  constructor(options) {
-    this.options = options;
+class Api {
+  constructor({baseUrl, headers}) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
   getInitialCards() {
-    return fetch(`${this.options.baseUrl}/cards`, {
-      headers: this.options.headers,
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   getUserInfo() {
-    return fetch(`${this.options.baseUrl}/users/me`, {
-      headers: this.options.headers,
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   createCards(cardData) {
-    return fetch(`${this.options.baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this.options.headers,
+      headers: this._headers,
       body: JSON.stringify(cardData),
     }).then((res) => {
       return this._getResponseData(res);
@@ -30,9 +31,9 @@ export class Api {
   }
 
   setUserInfo(userInfo) {
-    return fetch(`${this.options.baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this.options.headers,
+      headers: this._headers,
       body: JSON.stringify(userInfo),
     }).then((res) => {
       return this._getResponseData(res);
@@ -40,18 +41,18 @@ export class Api {
   }
 
   deleteCard(id) {
-    return fetch(`${this.options.baseUrl}/cards/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
-      headers: this.options.headers,
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   setLikeCard(id) {
-    return fetch(`${this.options.baseUrl}/cards/${id}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "PUT",
-      headers: this.options.headers,
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -59,18 +60,18 @@ export class Api {
   
 
   deleteLikeCard(id) {
-    return fetch(`${this.options.baseUrl}/cards/${id}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "DELETE",
-      headers: this.options.headers,
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
 
   setNewAvatar(avatarInfo) {
-    return fetch(`${this.options.baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this.options.headers,
+      headers: this._headers,
       body: JSON.stringify(avatarInfo),
     }).then((res) => {
       return this._getResponseData(res);
@@ -84,3 +85,13 @@ export class Api {
     return res.json();
   }
 }
+
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-63",
+  headers: {
+    authorization: "110366df-b38b-45be-88c4-715aacdd3349",
+    "Content-Type": "application/json",
+  },
+});
+
+export default api;

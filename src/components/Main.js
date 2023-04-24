@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../utils/Api.js";
 import Card from "./Card.js";
 
-function Main({onEditAvatar, onEditProfile, onAddPlace}) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
   const [userName, setUserName] = useState(null);
   const [userDescription, setUserDescription] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
@@ -54,7 +54,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace}) {
         ></button>
       </section>
     <section className="places">
-        {cards.map((card) => <Card key={card.id} card={card} />)}
+        {cards.map((card) => <Card key={card.id} card={card} onCardClick={onCardClick}/>)}
       </section>
     </main>
   );

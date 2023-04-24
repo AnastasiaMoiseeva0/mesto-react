@@ -10,7 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarOpen, setEditAvatarPopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -24,10 +24,15 @@ function App() {
     setAddPlacePopupOpen(true);
   };
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
  function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setSelectedCard(null);
   };
 
   return (
@@ -37,6 +42,7 @@ function App() {
         onEditAvatar={() => handleEditAvatarClick()}
         onEditProfile={() => handleEditProfileClick()}
         onAddPlace={() => handleAddPlaceClick()}
+        onCardClick={(card) => handleCardClick(card)}
       />
       <Footer />
       <PopupWithForm
@@ -120,7 +126,10 @@ function App() {
         />
         <span className="avatarInput-error"></span>
       </PopupWithForm>
-      <ImagePopup>
+      <ImagePopup 
+      card={selectedCard}
+      onClose={() => closeAllPopups()}
+      >
       </ImagePopup>
     </div>
   );

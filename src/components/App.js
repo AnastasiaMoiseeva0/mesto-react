@@ -50,7 +50,7 @@ function App() {
         name="editProfilePopup"
         buttonText="Сохранить"
         isOpen={isEditProfilePopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
       >
         <input
           id="nameInput"
@@ -80,7 +80,7 @@ function App() {
         name="newCardPopup"
         buttonText="Создать"
         isOpen={isAddPlacePopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
       >
         <input
           id="placeTitleInput"
@@ -107,14 +107,14 @@ function App() {
         title="Вы уверены"
         name="deleteCard"
         buttonText="Да"
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
       ></PopupWithForm>
       <PopupWithForm
         title="Обновить аватар"
         name="editAvatar"
         buttonText="Сохранить"
         isOpen={isEditAvatarOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
       >
         <input
           id="avatarInput"
@@ -128,7 +128,7 @@ function App() {
       </PopupWithForm>
       <ImagePopup 
       card={selectedCard}
-      onClose={() => closeAllPopups()}
+      onClose={closeAllPopups}
       >
       </ImagePopup>
     </div>

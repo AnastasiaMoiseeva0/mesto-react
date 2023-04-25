@@ -20,7 +20,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
     .catch(error => {
       console.log(error)
     });
-  })
+  }, [])
 
    return (
     <main>
@@ -54,7 +54,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
         ></button>
       </section>
     <section className="places">
-        {cards.map((card) => <Card key={card.id} card={card} onCardClick={onCardClick}/>)}
+        {cards.map((card) => <Card key={card._id} card={card} onCardClick={onCardClick}/>)}
       </section>
     </main>
   );

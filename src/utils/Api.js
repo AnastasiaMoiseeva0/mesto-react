@@ -49,25 +49,15 @@ class Api {
     });
   }
 
-  setLikeCard(id) {
+  changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
+      method: isLiked ? "PUT" : "DELETE",
       headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
   
-
-  deleteLikeCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then((res) => {
-      return this._getResponseData(res);
-    });
-  }
-
   setNewAvatar(avatarInfo) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",

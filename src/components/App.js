@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -26,12 +27,28 @@ function App() {
   }, []);
 
   function handleCardLike(card, setCards) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
-}
+  }
+
+  function handleCardDelete(card, setCards) {
+    api.deleteCard(card._id).then((newCard) => {
+      setCards((cards) => cards.fiter((c) => c._id !== card._id ? newCard : c));
+    });
+  }
+
+  function handleUpdateUser(user) {
+    api.setUserInfo(user).then((user) => {
+      setCurrentUser(user)
+    }).catch((error) => {
+     console.log(error);
+    }).finally(() => {
+      closeAllPopups()
+    });
+  }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -66,37 +83,9 @@ function App() {
           onAddPlace={() => handleAddPlaceClick()}
           onCardClick={(card) => handleCardClick(card)}
           onCardLike={(card, setCards) => handleCardLike(card, setCards)}
+          onCardDelete={(card, setCards) => handleCardDelete(card, setCards)}
         />
-        <PopupWithForm
-          title="Редактировать профиль"
-          name="editProfilePopup"
-          buttonText="Сохранить"
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            id="nameInput"
-            className="edit-form__field edit-form__field_name-input"
-            placeholder="Имя"
-            type="text"
-            name="nameInput"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="nameInput-error"></span>
-          <input
-            id="jobInput"
-            className="edit-form__field edit-form__field_job-input"
-            placeholder="О себе"
-            type="text"
-            name="jobInput"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="jobInput-error"></span>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
         <PopupWithForm
           title="Новое место"
           name="newCardPopup"
@@ -154,5 +143,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

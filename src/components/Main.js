@@ -3,7 +3,7 @@ import api from "../utils/Api.js";
 import Card from "./Card.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike}) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete}) {
   
   const [cards, setCards] = useState([]);
 
@@ -51,7 +51,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike}
         ></button>
       </section>
     <section className="places">
-        {cards.map((card) => <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={(card) => onCardLike(card, setCards)}/>)}
+        {cards.map((card) => <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={(card) => onCardLike(card, setCards)} onCardDelete={(card) => onCardDelete(card, setCards)}/>)}
       </section>
     </main>
   );

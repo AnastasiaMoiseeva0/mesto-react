@@ -5,7 +5,7 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
-import api from "../utils/Api.js";
+import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -16,7 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -33,15 +33,25 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    api
+    .changeLikeCardStatus(card._id, !isLiked)
+    .then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
+    api
+    .deleteCard(card._id)
+    .then(() => {
       setCards((cards) =>
         cards.filter((item) => item._id !== card._id));
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
 
@@ -112,8 +122,8 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
       <CurrentUserContext.Provider value={currentUser}>
+        <Header />
         <Main
           cards={cards}
           onEditAvatar={() => handleEditAvatarClick()}

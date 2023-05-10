@@ -11,7 +11,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCa
         <div className="profile__edit-avatar">
           <div
             className="profile__avatar"
-            style={{ backgroundImage: `url(${currentUser.avatar})` }}
+            style={{ backgroundImage: `url(${currentUser?.avatar})` }}
             alt="Аватар пользователя"
           ></div>
           <button 
@@ -21,14 +21,14 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCa
         </div>
         <div className="profile__info">
           <div className="profile__header">
-            <h1 className="profile__name">{currentUser.name}</h1>
+            <h1 className="profile__name">{currentUser?.name}</h1>
             <button
               type="button"
               className="button button_border_slim button_size_small profile__edit-button"
               onClick={onEditProfile}
             ></button>
           </div>
-          <p className="profile__profession">{currentUser.about}</p>
+          <p className="profile__profession">{currentUser?.about}</p>
         </div>
         <button
           type="button"
